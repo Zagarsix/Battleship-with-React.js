@@ -1,4 +1,5 @@
 import React from "react";
+import injectContext from "../store/appContext.js";
 import Grid from "./Grid.jsx";
 
 
@@ -9,4 +10,4 @@ const Home = () => {
 	);
 };
 
-export default Home;
+export default injectContext(Home);
