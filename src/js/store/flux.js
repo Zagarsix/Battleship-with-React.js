@@ -51,6 +51,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             isPlayerTurn: true,
             //Boolean to control the game flow.
             gameOver : false,
+            //Boolean to show boat position on player grid.
+            showBoats: false,
         },
         actions: {
             // Use getActions to call a function within a fuction
@@ -76,6 +78,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                 //reset the global store
                 setStore({ demo: demo });
             },
+            //Function to show the player's boats on his board.
+            toggleShowBoat: () => {
+                const store = getStore();
+                setStore({ showBoats : !store.showBoats})
+            }
+            ,
             //Global HandleClick Function for Player
             handleClick: (e, coordinate) => {
                 const store = getStore();
@@ -100,14 +108,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                                 return null
                             }
                             e.target.className = 'square hit';
-                            console.log(store.playerHitCount)
                         //If you click on an already clicked square
                         }else if(grid[coordinate[0]][coordinate[1]] === 1){
                             return null
                         }
                         //This one passes the turn to let the Bot Play
                         setStore({ isPlayerTurn : false})
-                        console.log(store.isPlayerTurn)
                     }
                 }
             },
@@ -115,31 +121,31 @@ const getState = ({ getStore, getActions, setStore }) => {
             handleBotClick: (e,coordinate) => {
                 const store = getStore();
                 if(!store.gameOver){
-                    //Grid to Attack
-                    var grid = store.playerGrid
-                    //Missed Shot
-                    if (grid[coordinate[0]][coordinate[1]] === 0) {
-                        grid[coordinate[0]][coordinate[1]] = 1
-                        //Saving the updated grid on the Store
-                        setStore({ playerGrid: grid })
-                        setStore({ moveCount: store.moveCount + 1})
-                        e.target.className = 'square miss';
-                    //Hit
-                    } else if (grid[coordinate[0]][coordinate[1]] === 2) {
-                        //Verification if square was already clicked
-                        if(e.target.className !== 'square hit'){
-                            setStore({ botHitCount: store.botHitCount+1})
+                    if(!store.isPlayerTurn){
+                        //Grid to Attack
+                        var grid = store.playerGrid
+                        //Missed Shot
+                        if (grid[coordinate[0]][coordinate[1]] === 0) {
+                            grid[coordinate[0]][coordinate[1]] = 1
+                            //Saving the updated grid on the Store
+                            setStore({ playerGrid: grid })
                             setStore({ moveCount: store.moveCount + 1})
+                            e.target.className = 'square miss';
+                        //Hit
+                        } else if (grid[coordinate[0]][coordinate[1]] === 2) {
+                            //Verification if square was already clicked
+                            if(e.target.className !== 'square hit'){
+                                setStore({ botHitCount: store.botHitCount+1})
+                                setStore({ moveCount: store.moveCount + 1})
+                            }
+                            e.target.className = 'square hit';
+                        //If you click on an already clicked square    
+                        }else if(grid[coordinate[0]][coordinate[1]] === 1){
+                            return null
                         }
-                        e.target.className = 'square hit';
-                        console.log(store.botHitCount)
-                    //If you click on an already clicked square    
-                    }else if(grid[coordinate[0]][coordinate[1]] === 1){
-                        return null
+                        //This one passes the turn to the Player
+                        setStore({ isPlayerTurn : true})
                     }
-                    //This one passes the turn to the Player
-                    setStore({ isPlayerTurn : true})
-                    console.log(store.isPlayerTurn)
 
                 }
             },

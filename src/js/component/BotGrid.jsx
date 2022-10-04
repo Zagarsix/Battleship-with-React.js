@@ -6,6 +6,7 @@ function BotGrid() {
   const { store, actions } = useContext(Context)
   const pickedNumbers = useRef([])
 
+  //This function picks a random number from 1 to 81, if the number was already picked it runs again recursively.
   function GridPicker(){
     var randInt = Math.floor(Math.random() * 81) + 1 // Random Number between 1 to 81 
     if(!pickedNumbers.current.includes(randInt)){

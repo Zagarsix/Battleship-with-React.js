@@ -47,6 +47,10 @@
     background-color: red;
 }
 
+.show{
+    border: 2px solid orange;
+}
+
 /* GAME SPACE STYLING */
 
 .gameboard{
