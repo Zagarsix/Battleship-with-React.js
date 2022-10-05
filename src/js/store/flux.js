@@ -78,12 +78,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 //reset the global store
                 setStore({ demo: demo });
             },
-            //Function to show the player's boats on his board.
-            toggleShowBoat: () => {
-                const store = getStore();
-                setStore({ showBoats : !store.showBoats})
-            }
-            ,
+            
             //Global HandleClick Function for Player
             handleClick: (e, coordinate) => {
                 const store = getStore();
