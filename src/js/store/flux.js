@@ -1,18 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            demo: [
-                {
-                    title: "FIRST",
-                    background: "white",
-                    initial: "white"
-                },
-                {
-                    title: "SECOND",
-                    background: "white",
-                    initial: "white"
-                }
-            ],
             // N° of Boats ,  1 - 5-Grid Boat , 3 - 4-Grid Boat , 2 - 3-Grid Boat, 1- 2-Grid Boat
             // PLAYER GRID
             // 0 --> default grid state
@@ -55,30 +43,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             showBoats: false,
         },
         actions: {
-            // Use getActions to call a function within a fuction
-            exampleFunction: () => {
-                getActions().changeColor(0, "green");
-            },
-            loadSomeData: () => {
-                /**
-                    fetch().then().then(data => setStore({ "foo": data.bar }))
-                */
-            },
-            changeColor: (index, color) => {
-                //get the store
-                const store = getStore();
-
-                //we have to loop the entire demo array to look for the respective index
-                //and change its color
-                const demo = store.demo.map((elm, i) => {
-                    if (i === index) elm.background = color;
-                    return elm;
-                });
-
-                //reset the global store
-                setStore({ demo: demo });
-            },
-            
             //Global HandleClick Function for Player
             handleClick: (e, coordinate) => {
                 const store = getStore();
@@ -146,6 +110,28 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             endGame : () => {
                 setStore({gameOver : true})
+            },
+            toggleShowBoat: () => {
+                const store = getStore()
+                setStore({ showBoats : !store.showBoats })
+                if(store.showBoats){
+                    for(var row = 0 ; row < store.playerGrid.length ; row++){
+                        for(var column = 0 ; column < 9 ; column++){
+                            if(store.playerGrid[row][column] === 2){
+                                document.getElementById(String(row)+String(column)).style.border = "2px solid orange"
+                            }
+                        }
+                    }
+                }else{
+                    for(var row = 0 ; row < store.playerGrid.length ; row++){
+                        for(var column = 0 ; column < 9 ; column++){
+                            if(store.playerGrid[row][column] === 2){
+                                document.getElementById(String(row)+String(column)).style.border = ""
+                            }
+                        }
+                    }
+                }
+                
             }
         }
     };
