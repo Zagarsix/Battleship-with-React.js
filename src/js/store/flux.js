@@ -41,6 +41,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             gameOver : false,
             //Boolean to show boat position on player grid.
             showBoats: false,
+            //Boolean to go to the main game when player grid is created.
+            gridBuilding : true,
         },
         actions: {
             //Global HandleClick Function for Player
@@ -132,6 +134,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 }
                 
+            },
+            handleBoatPlacement: (coordinate) => {
+                console.log(coordinate)
             }
         }
     };
