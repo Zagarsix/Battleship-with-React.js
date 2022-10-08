@@ -7,7 +7,6 @@ function PreGame() {
     for(var row = 0 ; row < store.playerGrid.length ; row++){
         for(var column = 0 ; column < 9 ; column++){
             if(store.playerGrid[row][column] === 2){
-                console.log("pregame"+String(row)+String(column))
                 document.getElementById("pregame"+String(row)+String(column)).className= 'square placed'
             }
         }

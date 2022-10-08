@@ -1,5 +1,5 @@
-import React from "react";
-import injectContext from "../store/appContext.js";
+import React, { useContext } from "react";
+import injectContext, { Context } from "../store/appContext.js";
 import Grid from "./Grid.jsx";
 import MainGame from "./MainGame.jsx";
 import PreGame from "./PreGame.jsx";
@@ -7,8 +7,11 @@ import PreGame from "./PreGame.jsx";
 
 //create your first component
 const Home = () => {
+	const { store, actions } = useContext(Context)
 	return (
-		<PreGame />
+		<>
+		{!store.isPlacementDone ? <PreGame /> : <MainGame />}
+		</>
 	);
 };
 

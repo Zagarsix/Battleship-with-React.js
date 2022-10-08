@@ -52,6 +52,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             fourGridBoat: 3,
             threeGridBoat: 2,
             twoGridBoat: 1,
+            //Boolean to Start Random Grid Generating for Bot and Main Game Render
+            isPlacementDone: false,
 
         },
         actions: {
@@ -271,7 +273,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }else if(store.twoGridBoat > 0){
                     //2-Grid Boat Check - VERTICAL
                     if(!store.isHorizontal){
-                        console.log(coordinate)
                         //Boat Placement Checking
                         var boatOverlap = false;
                         //Check if there is another boat on the place that the boat will be placed
@@ -294,7 +295,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     
                     //2-Grid Boat Check - HORIZONTAL   
                     }else if(store.isHorizontal){
-                        console.log(coordinate)
                         //Boat Placement Checking
                         var boatOverlap = false;
                         //Check if there is another boat on the place that the boat will be placed
@@ -315,6 +315,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                             setStore({ twoGridBoat: store.twoGridBoat - 1 })
                         }
                     }
+                    //Boolean Change to Proceed with the Bot Generation and render Main Game
+                    setTimeout(() => {setStore({ isPlacementDone: true})},"2000")
                 }
             },
             handleDirectionHorizontal: () => {
