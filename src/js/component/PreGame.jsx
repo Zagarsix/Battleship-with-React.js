@@ -7,7 +7,11 @@ function PreGame() {
     return (
         <>
             <h1 className='text-center p-3'>Place your boats!</h1>
-            <h3 className='text-center p-2'>Put your 5-Grid Destructor!</h3>
+            {/* Dinamic Headline when placing boats */}
+            {store.fiveGridBoat === 1 ? <h3 className='text-center p-2'>Put your 5-Grid Carrier! ({store.fiveGridBoat} left.)</h3> : null}
+            {store.fourGridBoat >= 1 && store.fiveGridBoat === 0 ?  <h3 className='text-center p-2'>Put your 4-Grid Battleships! ({store.fourGridBoat} left.)</h3> : null }
+            {store.threeGridBoat >= 1 && store.fiveGridBoat === 0 && store.fourGridBoat === 0 ?  <h3 className='text-center p-2'>Put your 3-Grid Cruiser! ({store.threeGridBoat} left.)</h3> : null }
+            {store.twoGridBoat === 1 && store.fiveGridBoat === 0 && store.fourGridBoat === 0 && store.threeGridBoat === 0 ?  <h3 className='text-center p-2'>Put your 2-Grid Destroyer! ({store.twoGridBoat} left.)</h3> : null }
             {/* Checks for horizontal or vertical placement */}
             <div className='d-flex justify-content-center pb-4'>
                 <div className="form-check form-check-inline">
@@ -17,6 +21,8 @@ function PreGame() {
                         name="inlineRadioOptions"
                         id="inlineRadio1"
                         defaultValue="option1"
+                        onClick={() => {actions.handleDirectionHorizontal()}}
+                        defaultChecked
                     />
                     <label className="form-check-label" htmlFor="inlineRadio1">
                         Horizontal
@@ -29,6 +35,7 @@ function PreGame() {
                         name="inlineRadioOptions"
                         id="inlineRadio2"
                         defaultValue="option2"
+                        onClick={() => {actions.handleDirectionVertical()}}
                     />
                     <label className="form-check-label" htmlFor="inlineRadio2">
                         Vertical
