@@ -1,32 +1,21 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            testGrid:[
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            ],
             // N° of Boats ,  1 - 5-Grid Boat , 3 - 4-Grid Boat , 2 - 3-Grid Boat, 1- 2-Grid Boat
             // PLAYER GRID
             // 0 --> default grid state
             // 1 --> missed grid
             // 2 --> boat grid
             playerGrid: [
-                [2, 0, 2, 2, 2, 2, 0, 0, 0],
-                [2, 0, 0, 0, 0, 0, 0, 0, 0],
-                [2, 0, 2, 0, 2, 2, 2, 2, 0],
-                [2, 0, 2, 0, 0, 0, 0, 0, 0],
-                [2, 0, 2, 0, 0, 2, 2, 0, 0],
-                [0, 0, 2, 0, 0, 0, 0, 0, 0],
-                [0, 2, 0, 0, 0, 2, 2, 2, 0],
-                [0, 2, 0, 0, 0, 0, 0, 0, 0],
-                [0, 2, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
             ],
             //Sum of Boat Squares hit -> used to determine winner. TO WIN SUM MUST BE: 25
             playerHitCount: 0,
@@ -158,7 +147,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             handleBoatPlacement: (coordinate) => {
                 const store = getStore();
-                var grid = store.testGrid
+                var grid = store.playerGrid
                 //5-GRID BOAT
                 if(store.fiveGridBoat > 0){
                     //5-Grid Carrier Placement - VERTICAL
@@ -286,22 +275,21 @@ const getState = ({ getStore, getActions, setStore }) => {
                         //Boat Placement Checking
                         var boatOverlap = false;
                         //Check if there is another boat on the place that the boat will be placed
-                        if(coordinate[0] <= 6){
-                            for(var i = 0 ; i < 3 ; i++){
+                        if(coordinate[0] <= 7){
+                            for(var i = 0 ; i < 2 ; i++){
                                 if(grid[coordinate[0]+i][coordinate[1]] === 2){
                                     boatOverlap  = true;
                                 }
                             }
                         }
                         //Boat Placement if everything is OK
-                        if(coordinate[0] <= 6 && !boatOverlap){
+                        if(coordinate[0] <= 7 && !boatOverlap){
                             var counter = 0
-                            while( counter < 3 ){
+                            while( counter < 2 ){
                                 grid[coordinate[0]+counter][coordinate[1]] = 2
                                 counter+=1
                             }
                             setStore({ twoGridBoat: store.twoGridBoat - 1 })
-                            console.log(grid)
                         }
                     
                     //2-Grid Boat Check - HORIZONTAL   
@@ -310,22 +298,21 @@ const getState = ({ getStore, getActions, setStore }) => {
                         //Boat Placement Checking
                         var boatOverlap = false;
                         //Check if there is another boat on the place that the boat will be placed
-                        if(coordinate[1] <= 6){
-                            for(var i = 0 ; i < 3 ; i++){
+                        if(coordinate[1] <= 7){
+                            for(var i = 0 ; i < 2 ; i++){
                                 if(grid[coordinate[0]][coordinate[1]+i] === 2){
                                     boatOverlap  = true;
                                 }
                             }
                         }
                         //Boat Placement if everything is OK
-                        if(coordinate[1] <= 6 && !boatOverlap){
+                        if(coordinate[1] <= 7 && !boatOverlap){
                             var counter = 0
-                            while( counter < 3 ){
+                            while( counter < 2 ){
                                 grid[coordinate[0]][coordinate[1]+counter] = 2
                                 counter+=1
                             }
                             setStore({ twoGridBoat: store.twoGridBoat - 1 })
-                            console.log(grid)
                         }
                     }
                 }

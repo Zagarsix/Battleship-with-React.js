@@ -51,6 +51,10 @@
     border: 2px solid orange;
 }
 
+.placed{
+    background-color: blue;
+}
+
 /* GAME SPACE STYLING */
 
 .gameboard{
