@@ -19,6 +19,7 @@ function MainGame() {
     }
   }
 
+  //Function to randomly choose and orientation for the boat to place.
   function selectOrientation(){
     var number = Math.floor(Math.random() * 100 + 1)
     if( number <= 50 ){
@@ -34,10 +35,12 @@ function MainGame() {
     var botFourGridBoat = 3
     var botThreeGridBoat = 2
     var botTwoGridBoat = 1
-    //Beginning of Placement Function for Bot Boats.
 
+    //Beginning of Placement Function for Bot Boats.
+    //This function is really similar to the one on actions, on flux.js
+    //Whenever the coordinate is not valid to place a boat, it add's that coordinate to the list of coordinates that won't be picked again.
     var placed = 0
-    while(placed < 7){
+    while(placed < 7){ // <--- If the 7 boats are placed the loop ends.
         var coordinate = generateRandomCoordinate();
         var orientation = selectOrientation();
         var grid = store.botGrid;
@@ -248,6 +251,7 @@ function MainGame() {
       {store.isPlayerTurn ? <h2>It's Your Turn!</h2> : <h2>It's the Computer's Turn!</h2>}
       {store.gameOver ? (!store.isPlayerTurn ? <h1>Game Over!, You Won!</h1> : <h1>Game Over!, The Computer Won!</h1>) : null}
     </div>
+    {/* Main Div that contains the Player and Bot Grid */}
     <div className='gameboard'>
       <div className='playerboard'>
         <div className='board-header text-center'>

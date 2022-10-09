@@ -7,6 +7,7 @@ function BotGrid() {
   const pickedNumbers = useRef([])
 
   //This function picks a random number from 1 to 81, if the number was already picked it runs again recursively.
+  //The main objective of this function is to allow the bot play it's own board.
   function GridPicker(){
     var randInt = Math.floor(Math.random() * 81) + 1 // Random Number between 1 to 81 
     if(!pickedNumbers.current.includes(randInt)){
@@ -20,7 +21,7 @@ function BotGrid() {
       }
     }
   }
-  //Bot Random Grid Picking
+  //Bot Random Grid Picking and Clicking.
   if(!store.isPlayerTurn && !store.gameOver){
     setTimeout(() => {
       document.getElementById(GridPicker()).click()
@@ -59,6 +60,7 @@ function BotGrid() {
                 <p>9</p>
             </div>
         </div>
+        {/* Row 1 [0,X] */}
         <div className='grid-row'>
             <div className='row-counter'><p>1</p></div>
             <div id="square1" className='square' onClick={(e) => actions.handleBotClick(e,[0,0])}></div>
@@ -71,6 +73,7 @@ function BotGrid() {
             <div id="square8" className='square' onClick={(e) => actions.handleBotClick(e,[0,7])}></div>
             <div id="square9" className='square' onClick={(e) => actions.handleBotClick(e,[0,8])}></div>
         </div>
+        {/* Row 2 [1,X] */}
         <div className='grid-row'>
             <div className='row-counter'><p>2</p></div>
             <div id="square10" className='square' onClick={(e) => actions.handleBotClick(e,[1,0])}></div>
@@ -83,6 +86,7 @@ function BotGrid() {
             <div id="square17" className='square' onClick={(e) => actions.handleBotClick(e,[1,7])}></div>
             <div id="square18" className='square' onClick={(e) => actions.handleBotClick(e,[1,8])}></div>
         </div>
+        {/* Row 3 [2,X] */}
         <div className='grid-row'>
             <div className='row-counter'><p>3</p></div>
             <div id="square19" className='square' onClick={(e) => actions.handleBotClick(e,[2,0])}></div>
@@ -95,6 +99,7 @@ function BotGrid() {
             <div id="square26" className='square' onClick={(e) => actions.handleBotClick(e,[2,7])}></div>
             <div id="square27" className='square' onClick={(e) => actions.handleBotClick(e,[2,8])}></div>
         </div>
+        {/* Row 4 [3,X] */}
         <div className='grid-row'>
             <div className='row-counter'><p>4</p></div>
             <div id="square28" className='square' onClick={(e) => actions.handleBotClick(e,[3,0])}></div>
@@ -107,6 +112,7 @@ function BotGrid() {
             <div id="square35" className='square' onClick={(e) => actions.handleBotClick(e,[3,7])}></div>
             <div id="square36" className='square' onClick={(e) => actions.handleBotClick(e,[3,8])}></div>
         </div>
+        {/* Row 5 [4,X] */}
         <div className='grid-row'>
             <div className='row-counter'><p>5</p></div>
             <div id="square37" className='square' onClick={(e) => actions.handleBotClick(e,[4,0])}></div>
@@ -119,6 +125,7 @@ function BotGrid() {
             <div id="square44" className='square' onClick={(e) => actions.handleBotClick(e,[4,7])}></div>
             <div id="square45" className='square' onClick={(e) => actions.handleBotClick(e,[4,8])}></div>
         </div>
+        {/* Row 6 [5,X] */}
         <div className='grid-row'>
             <div className='row-counter'><p>6</p></div>
             <div id="square46" className='square' onClick={(e) => actions.handleBotClick(e,[5,0])}></div>
@@ -131,6 +138,7 @@ function BotGrid() {
             <div id="square53" className='square' onClick={(e) => actions.handleBotClick(e,[5,7])}></div>
             <div id="square54" className='square' onClick={(e) => actions.handleBotClick(e,[5,8])}></div>
         </div>
+        {/* Row 7 [6,X] */}
         <div className='grid-row'>
             <div className='row-counter'><p>7</p></div>
             <div id="square55" className='square' onClick={(e) => actions.handleBotClick(e,[6,0])}></div>
@@ -143,6 +151,7 @@ function BotGrid() {
             <div id="square62" className='square' onClick={(e) => actions.handleBotClick(e,[6,7])}></div>
             <div id="square63" className='square' onClick={(e) => actions.handleBotClick(e,[6,8])}></div>
         </div>
+        {/* Row 8 [7,X] */}
         <div className='grid-row'>
             <div className='row-counter'><p>8</p></div>
             <div id="square64" className='square' onClick={(e) => actions.handleBotClick(e,[7,0])}></div>
@@ -155,6 +164,7 @@ function BotGrid() {
             <div id="square71" className='square' onClick={(e) => actions.handleBotClick(e,[7,7])}></div>
             <div id="square72" className='square' onClick={(e) => actions.handleBotClick(e,[7,8])}></div>
         </div>
+        {/* Row 9 [8,X] */}
         <div className='grid-row'>
             <div className='row-counter'><p>9</p></div>
             <div id="square73" className='square' onClick={(e) => actions.handleBotClick(e,[8,0])}></div>

@@ -127,13 +127,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 }
             },
+            /* Function to end the game loop */
             endGame : () => {
                 setStore({gameOver : true})
             },
+            /* Function to highlight where the player boats are placed */
             toggleShowBoat: () => {
                 const store = getStore()
                 setStore({ showBoats : !store.showBoats })
                 if(store.showBoats){
+                    //This loop cans the playerGrid to change its style whenever a 2 is found. (2 is where a boat is placed on the Grid)
                     for(var row = 0 ; row < store.playerGrid.length ; row++){
                         for(var column = 0 ; column < 9 ; column++){
                             if(store.playerGrid[row][column] === 2){
@@ -142,6 +145,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         }
                     }
                 }else{
+                    //This loop is to revert the changes the above loops made.
                     for(var row = 0 ; row < store.playerGrid.length ; row++){
                         for(var column = 0 ; column < 9 ; column++){
                             if(store.playerGrid[row][column] === 2){
@@ -152,6 +156,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
                 
             },
+            //Function to control the grid construction for the player, only admitting valid positions.
             handleBoatPlacement: (coordinate) => {
                 const store = getStore();
                 var grid = store.playerGrid;
@@ -326,178 +331,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 }
             },
-            botHandleBoatPlacement: (coordinate) => {
-                const store = getStore();
-                var grid = store.botGrid;
-                 //5-GRID BOAT
-                if(store.botFiveGridBoat > 0){
-                    //5-Grid Carrier Placement - VERTICAL
-                    if(!store.isHorizontal){
-                        //Boat Placement Check , to prevent boat placement outside the grid.
-                        if(coordinate[0] <= 4){
-                            var counter = 0
-                            //Boat Placement if everything is OK
-                            while( counter < 5 ){
-                                grid[coordinate[0]+counter][coordinate[1]] = 2
-                                counter+=1
-                            }
-                            setStore({fiveGridBoat: 0})
-                        }
-                    //5 - Grid Carrier Placement - HORIZONTAL   
-                    }else if(store.isHorizontal){
-                        //Boat Placement Check , to prevent boat placement outside the grid.
-                        if(coordinate[1] <= 4){
-                            var counter = 0
-                            //Boat Placement if everything is OK
-                            while( counter < 5 ){
-                                grid[coordinate[0]][coordinate[1]+counter] = 2
-                                counter+=1
-                            }
-                            setStore({ fiveGridBoat: 0 })
-                        }
-                    }
-                //4-GRID BOAT
-                }else if(store.fourGridBoat > 0){
-                    //4-Grid Boat Check - VERTICAL
-                    if(!store.isHorizontal){
-                        //Boat Placement Checking
-                        var boatOverlap = false;
-                        //Check if there is another boat on the place that the boat will be placed
-                        if(coordinate[0] <= 5){
-                            for(var i = 0 ; i < 4 ; i++){
-                                if(grid[coordinate[0]+i][coordinate[1]] === 2){
-                                    boatOverlap  = true;
-                                }
-                            }
-                        }
-                        //Boat Placement if everything is OK
-                        if(coordinate[0] <= 5 && !boatOverlap){
-                            var counter = 0
-                            while( counter < 4 ){
-                                grid[coordinate[0]+counter][coordinate[1]] = 2
-                                counter+=1
-                            }
-                            setStore({ fourGridBoat: store.fourGridBoat - 1 })
-                        }
-                    
-                    //4-Grid Boat Check - HORIZONTAL   
-                    }else if(store.isHorizontal){
-                        //Boat Placement Checking
-                        var boatOverlap = false;
-                        //Check if there is another boat on the place that the boat will be placed
-                        if(coordinate[1] <= 5){
-                            for(var i = 0 ; i < 4 ; i++){
-                                if(grid[coordinate[0]][coordinate[1]+i] === 2){
-                                    boatOverlap  = true;
-                                }
-                            }
-                        }
-                        //Boat Placement if everything is OK
-                        if(coordinate[1] <= 5 && !boatOverlap){
-                            var counter = 0
-                            while( counter < 4 ){
-                                grid[coordinate[0]][coordinate[1]+counter] = 2
-                                counter+=1
-                            }
-                            setStore({ fourGridBoat: store.fourGridBoat - 1 })
-                        }
-                    }
-                //3-GRID BOAT    
-                }else if(store.threeGridBoat > 0){
-                    //3-Grid Boat Check - VERTICAL
-                    if(!store.isHorizontal){
-                        //Boat Placement Checking
-                        var boatOverlap = false;
-                        //Check if there is another boat on the place that the boat will be placed
-                        if(coordinate[0] <= 6){
-                            for(var i = 0 ; i < 3 ; i++){
-                                if(grid[coordinate[0]+i][coordinate[1]] === 2){
-                                    boatOverlap  = true;
-                                }
-                            }
-                        }
-                        //Boat Placement if everything is OK
-                        if(coordinate[0] <= 6 && !boatOverlap){
-                            var counter = 0
-                            while( counter < 3 ){
-                                grid[coordinate[0]+counter][coordinate[1]] = 2
-                                counter+=1
-                            }
-                            setStore({ threeGridBoat: store.threeGridBoat - 1 })
-                        }
-                    
-                    //3-Grid Boat Check - HORIZONTAL   
-                    }else if(store.isHorizontal){
-                        //Boat Placement Checking
-                        var boatOverlap = false;
-                        //Check if there is another boat on the place that the boat will be placed
-                        if(coordinate[1] <= 6){
-                            for(var i = 0 ; i < 3 ; i++){
-                                if(grid[coordinate[0]][coordinate[1]+i] === 2){
-                                    boatOverlap  = true;
-                                }
-                            }
-                        }
-                        //Boat Placement if everything is OK
-                        if(coordinate[1] <= 6 && !boatOverlap){
-                            var counter = 0
-                            while( counter < 3 ){
-                                grid[coordinate[0]][coordinate[1]+counter] = 2
-                                counter+=1
-                            }
-                            setStore({ threeGridBoat: store.threeGridBoat - 1 })
-                        }
-                    }
-                //2-GRID BOAT    
-                }else if(store.twoGridBoat > 0){
-                    //2-Grid Boat Check - VERTICAL
-                    if(!store.isHorizontal){
-                        //Boat Placement Checking
-                        var boatOverlap = false;
-                        //Check if there is another boat on the place that the boat will be placed
-                        if(coordinate[0] <= 7){
-                            for(var i = 0 ; i < 2 ; i++){
-                                if(grid[coordinate[0]+i][coordinate[1]] === 2){
-                                    boatOverlap  = true;
-                                }
-                            }
-                        }
-                        //Boat Placement if everything is OK
-                        if(coordinate[0] <= 7 && !boatOverlap){
-                            var counter = 0
-                            while( counter < 2 ){
-                                grid[coordinate[0]+counter][coordinate[1]] = 2
-                                counter+=1
-                            }
-                            setStore({ twoGridBoat: store.twoGridBoat - 1 })
-                        }
-                    
-                    //2-Grid Boat Check - HORIZONTAL   
-                    }else if(store.isHorizontal){
-                        //Boat Placement Checking
-                        var boatOverlap = false;
-                        //Check if there is another boat on the place that the boat will be placed
-                        if(coordinate[1] <= 7){
-                            for(var i = 0 ; i < 2 ; i++){
-                                if(grid[coordinate[0]][coordinate[1]+i] === 2){
-                                    boatOverlap  = true;
-                                }
-                            }
-                        }
-                        //Boat Placement if everything is OK
-                        if(coordinate[1] <= 7 && !boatOverlap){
-                            var counter = 0
-                            while( counter < 2 ){
-                                grid[coordinate[0]][coordinate[1]+counter] = 2
-                                counter+=1
-                            }
-                            setStore({ twoGridBoat: store.twoGridBoat - 1 })
-                        }
-                    }
-                }
-            },
-            
-            
             //To set the placement to Horizontal
             handleDirectionHorizontal: () => {
                 setStore({ isHorizontal: true })
