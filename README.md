@@ -19,7 +19,7 @@ You can see where your boats are placed if you press the Show Boats button.
 
 The game is over when whoever sink all the boats of its opponent first!.
 
-#  How to Run 🖥
+#  How to Run Locally🖥
 
 Run all of these commands on the main directory.
 
@@ -27,3 +27,6 @@ Run all of these commands on the main directory.
 
 `$ npm run start`
 
+# Play it Online! 🌎
+
+https://battleship-react.vercel.app
