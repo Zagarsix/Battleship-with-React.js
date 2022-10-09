@@ -21,7 +21,7 @@ function BotGrid() {
     }
   }
   //Bot Random Grid Picking
-  if(!store.isPlayerTurn){
+  if(!store.isPlayerTurn && !store.gameOver){
     setTimeout(() => {
       document.getElementById(GridPicker()).click()
     },"750")

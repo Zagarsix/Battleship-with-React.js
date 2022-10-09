@@ -12,6 +12,10 @@ function PreGame() {
         }
     }
 
+    if(store.isPlacementDone){
+        console.log('Here we generate the Random BOT grid')
+    }
+
     return (
         <>
             <h1 className='text-center p-3'>Place your boats!</h1>

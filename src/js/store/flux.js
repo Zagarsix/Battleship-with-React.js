@@ -22,14 +22,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             // COMPUTER GRID
             botGrid: [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 2, 0, 0, 0, 0, 0, 0, 2],
-                [0, 2, 0, 2, 2, 2, 2, 0, 2],
-                [0, 2, 0, 0, 0, 0, 0, 0, 2],
-                [0, 2, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 2, 2, 2, 2, 2, 2, 0],
-                [0, 0, 2, 0, 0, 0, 0, 0, 0],
-                [0, 2, 2, 2, 2, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 2, 2, 2],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
             ],
             //Sum of Boat Squares hit -> used to determine winner. This one is for the Computer.
             botHitCount: 0,
@@ -326,16 +326,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 }
             },
-            generateRandomCoordinate: () => {
-                var first = Math.floor(Math.random() * 9)
-                var second = Math.floor(Math.random() * 9)
-                return [first,second]
-            },
-            botHandleBoatPlacement: () => {
-                console.log(generateRandomCoordinate())
+            botHandleBoatPlacement: (coordinate) => {
                 const store = getStore();
                 var grid = store.botGrid;
-                /* //5-GRID BOAT
+                 //5-GRID BOAT
                 if(store.botFiveGridBoat > 0){
                     //5-Grid Carrier Placement - VERTICAL
                     if(!store.isHorizontal){
@@ -500,7 +494,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                             setStore({ twoGridBoat: store.twoGridBoat - 1 })
                         }
                     }
-                } */
+                }
             },
             
             
