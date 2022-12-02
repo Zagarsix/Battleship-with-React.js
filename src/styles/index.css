@@ -57,7 +57,7 @@ body{
 }
 
 .show{
-    border: 2px solid rgb(34, 240, 51);
+    border: 10px solid red;
 }
 
 .placed{

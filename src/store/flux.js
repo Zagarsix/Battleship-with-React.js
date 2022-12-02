@@ -131,7 +131,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             endGame : () => {
                 setStore({gameOver : true})
             },
-            /* Function to highlight where the player boats are placed */
+            /* Resalta la posición de los barcos del jugador */
             toggleShowBoat: () => {
                 const store = getStore()
                 setStore({ showBoats : !store.showBoats })
@@ -140,7 +140,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     for(var row = 0 ; row < store.gamerBoard.length ; row++){
                         for(var column = 0 ; column < 9 ; column++){
                             if(store.gamerBoard[row][column] === 2){
-                                document.getElementById(String(row)+String(column)).style.border = "2px solid orange"
+                                document.getElementById(String(row)+String(column)).style.border = "5px solid red"
                             }
                         }
                     }

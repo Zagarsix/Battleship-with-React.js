@@ -37,13 +37,13 @@ La App estará disponible en [localhost](http://localhost:3000/)
 - Una vez que hayas posicionado tus barcos, la CPU distribuye sus barcos automáticamente. 
 - Tú eres el primero en "disparar". Si aciertas, el cuadrado quedará marcado en rojo. De lo contrario, quedará marcado en azul semitransparente, simulando el agua.
 
-
+![Alt text](src/img/Acertar-disparo.png)
 
 
 - Siempre que lo desees, puedes verificar la posición de tus barcos, presionando el botón "mostrar barcos" que se encuentra en la parte inferior de tu tablero.
 
+![Alt text](src/img/Mostrar-Barcos.png)
 
 
 
-
-- Finalmente, quien logre hundir todos los barcos del contrincante, se coronará como ganador de Battleship!!! Suerte!!!
+- Finalmente, quien logre hundir todos los barcos del contrincante, se coronará como ganador de Battleship!!! Suerte!!!![Alt text](src/img/BSwallpaper.jpg)
