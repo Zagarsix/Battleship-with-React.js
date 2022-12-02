@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../store/appContext'
 
-function Grid() {
+function PlayerBoard() {
   const { store, actions } = useContext(Context)
 
   return (
-    /* Main Grid */
-    <div className='grid'>
-        {/* Column Coordinates Section */}
-        <div className='column-coordinates'>
+    /* Tablero Principal del jugador */
+    <div className='board'>
+        {/* Sección de columnas */}
+        <div className='columns'>
             <div className='column-counter'>
                 <p>1</p>
             </div>
@@ -38,7 +38,7 @@ function Grid() {
             </div>
         </div>
         {/* Row 1 [0,X] */}
-        <div className='grid-row'>
+        <div className='rows'>
             <div className='row-counter'><p>1</p></div>
             <div id='00' className='square' onClick={(e) => actions.handleClick(e,[0,0])}></div>
             <div id='01' className='square' onClick={(e) => actions.handleClick(e,[0,1])}></div>
@@ -51,7 +51,7 @@ function Grid() {
             <div id='08' className='square' onClick={(e) => actions.handleClick(e,[0,8])}></div>
         </div>
         {/* Row 2 [1,X] */}
-        <div className='grid-row'>
+        <div className='rows'>
             <div className='row-counter'><p>2</p></div>
             <div id='10' className='square' onClick={(e) => actions.handleClick(e,[1,0])}></div>
             <div id='11' className='square' onClick={(e) => actions.handleClick(e,[1,1])}></div>
@@ -64,7 +64,7 @@ function Grid() {
             <div id='18' className='square' onClick={(e) => actions.handleClick(e,[1,8])}></div>
         </div>
         {/* Row 3 [2,X] */}
-        <div className='grid-row'>
+        <div className='rows'>
             <div className='row-counter'><p>3</p></div>
             <div id='20' className='square' onClick={(e) => actions.handleClick(e,[2,0])}></div>
             <div id='21' className='square' onClick={(e) => actions.handleClick(e,[2,1])}></div>
@@ -77,7 +77,7 @@ function Grid() {
             <div id='28' className='square' onClick={(e) => actions.handleClick(e,[2,8])}></div>
         </div>
         {/* Row 4 [3,X] */}
-        <div className='grid-row'>
+        <div className='rows'>
             <div className='row-counter'><p>4</p></div>
             <div id='30' className='square' onClick={(e) => actions.handleClick(e,[3,0])}></div>
             <div id='31' className='square' onClick={(e) => actions.handleClick(e,[3,1])}></div>
@@ -90,7 +90,7 @@ function Grid() {
             <div id='38' className='square' onClick={(e) => actions.handleClick(e,[3,8])}></div>
         </div>
         {/* Row 5 [4,X] */}
-        <div className='grid-row'>
+        <div className='rows'>
             <div className='row-counter'><p>5</p></div>
             <div id='40' className='square' onClick={(e) => actions.handleClick(e,[4,0])}></div>
             <div id='41' className='square' onClick={(e) => actions.handleClick(e,[4,1])}></div>
@@ -103,7 +103,7 @@ function Grid() {
             <div id='48' className='square' onClick={(e) => actions.handleClick(e,[4,8])}></div>
         </div>
         {/* Row 6 [5,X] */}
-        <div className='grid-row'>
+        <div className='rows'>
             <div className='row-counter'><p>6</p></div>
             <div id='50' className='square' onClick={(e) => actions.handleClick(e,[5,0])}></div>
             <div id='51' className='square' onClick={(e) => actions.handleClick(e,[5,1])}></div>
@@ -116,7 +116,7 @@ function Grid() {
             <div id='58' className='square' onClick={(e) => actions.handleClick(e,[5,8])}></div>
         </div>
         {/* Row 7 [6,X] */}
-        <div className='grid-row'>
+        <div className='rows'>
             <div className='row-counter'><p>7</p></div>
             <div id='60' className='square' onClick={(e) => actions.handleClick(e,[6,0])}></div>
             <div id='61' className='square' onClick={(e) => actions.handleClick(e,[6,1])}></div>
@@ -129,7 +129,7 @@ function Grid() {
             <div id='68' className='square' onClick={(e) => actions.handleClick(e,[6,8])}></div>
         </div>
         {/* Row 8 [7,X] */}
-        <div className='grid-row'>
+        <div className='rows'>
             <div className='row-counter'><p>8</p></div>
             <div id='70' className='square' onClick={(e) => actions.handleClick(e,[7,0])}></div>
             <div id='71' className='square' onClick={(e) => actions.handleClick(e,[7,1])}></div>
@@ -142,7 +142,7 @@ function Grid() {
             <div id='78' className='square' onClick={(e) => actions.handleClick(e,[7,8])}></div>
         </div>
         {/* Row 9 [8,X] */}
-        <div className='grid-row'>
+        <div className='rows'>
             <div className='row-counter'><p>9</p></div>
             <div id='80' className='square' onClick={(e) => actions.handleClick(e,[8,0])}></div>
             <div id='81' className='square' onClick={(e) => actions.handleClick(e,[8,1])}></div>
@@ -158,4 +158,4 @@ function Grid() {
   )
 }
 
-export default Grid
+export default PlayerBoard;

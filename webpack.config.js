@@ -14,7 +14,7 @@ console.log("publicUrl", publicUrl)
 
 module.exports = {
   entry: [
-    './src/js/index.js'
+    './src/index.js'
   ],
   output: {
     filename: 'bundle.js',
@@ -66,7 +66,7 @@ module.exports = {
     //   files: path.resolve(__dirname, "src"),
     // }),
     new HtmlWebpackPlugin({
-        favicon: '4geeks.ico',
+        favicon: 'Battleship2.ico',
         template: 'template.html'
     }),
   ]

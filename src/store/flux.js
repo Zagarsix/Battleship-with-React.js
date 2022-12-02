@@ -3,10 +3,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         store: {
             // N° of Boats ,  1 - 5-Grid Boat , 3 - 4-Grid Boat , 2 - 3-Grid Boat, 1- 2-Grid Boat
             // PLAYER GRID
-            // 0 --> default grid state
-            // 1 --> missed grid
-            // 2 --> boat grid
-            playerGrid: [
+            // 0 --> default board state
+            // 1 --> missed board
+            // 2 --> boat board
+            gamerBoard: [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -39,11 +39,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             isPlayerTurn: true,
             //Boolean to control the game flow.
             gameOver : false,
-            //Boolean to show boat position on player grid.
+            //Boolean to show boat position on player board.
             showBoats: false,
 
             //--------Grid Building Section of Global Variables-----------
-            //Boolean to go to the main game when player grid is created.
+            //Boolean to go to the main game when player board is created.
             gridBuilding : true,
             //Boolean to set the boat placement horizonal or vertical.
             isHorizontal: true,
@@ -68,16 +68,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                 if(!store.gameOver){
                     if(store.isPlayerTurn){
                         //Grid to Attack
-                        var grid = store.botGrid
+                        var board = store.botGrid
                         //Missed Shot
-                        if (grid[coordinate[0]][coordinate[1]] === 0) {
-                            grid[coordinate[0]][coordinate[1]] = 1
-                            //Saving the updated grid on the Store
-                            setStore({ botGrid: grid })
+                        if (board[coordinate[0]][coordinate[1]] === 0) {
+                            board[coordinate[0]][coordinate[1]] = 1
+                            //Saving the updated board on the Store
+                            setStore({ botGrid: board })
                             setStore({ moveCount: store.moveCount + 1})
                             e.target.className = 'square miss';
                         //Hit
-                        } else if (grid[coordinate[0]][coordinate[1]] === 2) {
+                        } else if (board[coordinate[0]][coordinate[1]] === 2) {
                             //Verification if square was already clicked
                             if(e.target.className !== 'square hit'){
                                 setStore({ playerHitCount: store.playerHitCount+1})
@@ -87,7 +87,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                             }
                             e.target.className = 'square hit';
                         //If you click on an already clicked square
-                        }else if(grid[coordinate[0]][coordinate[1]] === 1){
+                        }else if(board[coordinate[0]][coordinate[1]] === 1){
                             return null
                         }
                         //This one passes the turn to let the Bot Play
@@ -101,16 +101,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                 if(!store.gameOver){
                     if(!store.isPlayerTurn){
                         //Grid to Attack
-                        var grid = store.playerGrid
+                        var board = store.gamerBoard
                         //Missed Shot
-                        if (grid[coordinate[0]][coordinate[1]] === 0) {
-                            grid[coordinate[0]][coordinate[1]] = 1
-                            //Saving the updated grid on the Store
-                            setStore({ playerGrid: grid })
+                        if (board[coordinate[0]][coordinate[1]] === 0) {
+                            board[coordinate[0]][coordinate[1]] = 1
+                            //Saving the updated board on the Store
+                            setStore({ gamerBoard: board })
                             setStore({ moveCount: store.moveCount + 1})
                             e.target.className = 'square miss';
                         //Hit
-                        } else if (grid[coordinate[0]][coordinate[1]] === 2) {
+                        } else if (board[coordinate[0]][coordinate[1]] === 2) {
                             //Verification if square was already clicked
                             if(e.target.className !== 'square hit'){
                                 setStore({ botHitCount: store.botHitCount+1})
@@ -118,7 +118,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                             }
                             e.target.className = 'square hit';
                         //If you click on an already clicked square    
-                        }else if(grid[coordinate[0]][coordinate[1]] === 1){
+                        }else if(board[coordinate[0]][coordinate[1]] === 1){
                             return null
                         }
                         //This one passes the turn to the Player
@@ -136,19 +136,19 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const store = getStore()
                 setStore({ showBoats : !store.showBoats })
                 if(store.showBoats){
-                    //This loop cans the playerGrid to change its style whenever a 2 is found. (2 is where a boat is placed on the Grid)
-                    for(var row = 0 ; row < store.playerGrid.length ; row++){
+                    //This loop cans the gamerBoard to change its style whenever a 2 is found. (2 is where a boat is placed on the Grid)
+                    for(var row = 0 ; row < store.gamerBoard.length ; row++){
                         for(var column = 0 ; column < 9 ; column++){
-                            if(store.playerGrid[row][column] === 2){
+                            if(store.gamerBoard[row][column] === 2){
                                 document.getElementById(String(row)+String(column)).style.border = "2px solid orange"
                             }
                         }
                     }
                 }else{
                     //This loop is to revert the changes the above loops made.
-                    for(var row = 0 ; row < store.playerGrid.length ; row++){
+                    for(var row = 0 ; row < store.gamerBoard.length ; row++){
                         for(var column = 0 ; column < 9 ; column++){
-                            if(store.playerGrid[row][column] === 2){
+                            if(store.gamerBoard[row][column] === 2){
                                 document.getElementById(String(row)+String(column)).style.border = ""
                             }
                         }
@@ -156,32 +156,32 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
                 
             },
-            //Function to control the grid construction for the player, only admitting valid positions.
+            //Function to control the board construction for the player, only admitting valid positions.
             handleBoatPlacement: (coordinate) => {
                 const store = getStore();
-                var grid = store.playerGrid;
+                var board = store.gamerBoard;
                 //5-GRID BOAT
                 if(store.fiveGridBoat > 0){
                     //5-Grid Carrier Placement - VERTICAL
                     if(!store.isHorizontal){
-                        //Boat Placement Check , to prevent boat placement outside the grid.
+                        //Boat Placement Check , to prevent boat placement outside the board.
                         if(coordinate[0] <= 4){
                             var counter = 0
                             //Boat Placement if everything is OK
                             while( counter < 5 ){
-                                grid[coordinate[0]+counter][coordinate[1]] = 2
+                                board[coordinate[0]+counter][coordinate[1]] = 2
                                 counter+=1
                             }
                             setStore({fiveGridBoat: 0})
                         }
                     //5 - Grid Carrier Placement - HORIZONTAL   
                     }else if(store.isHorizontal){
-                        //Boat Placement Check , to prevent boat placement outside the grid.
+                        //Boat Placement Check , to prevent boat placement outside the board.
                         if(coordinate[1] <= 4){
                             var counter = 0
                             //Boat Placement if everything is OK
                             while( counter < 5 ){
-                                grid[coordinate[0]][coordinate[1]+counter] = 2
+                                board[coordinate[0]][coordinate[1]+counter] = 2
                                 counter+=1
                             }
                             setStore({ fiveGridBoat: 0 })
@@ -196,7 +196,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         //Check if there is another boat on the place that the boat will be placed
                         if(coordinate[0] <= 5){
                             for(var i = 0 ; i < 4 ; i++){
-                                if(grid[coordinate[0]+i][coordinate[1]] === 2){
+                                if(board[coordinate[0]+i][coordinate[1]] === 2){
                                     boatOverlap  = true;
                                 }
                             }
@@ -205,7 +205,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         if(coordinate[0] <= 5 && !boatOverlap){
                             var counter = 0
                             while( counter < 4 ){
-                                grid[coordinate[0]+counter][coordinate[1]] = 2
+                                board[coordinate[0]+counter][coordinate[1]] = 2
                                 counter+=1
                             }
                             setStore({ fourGridBoat: store.fourGridBoat - 1 })
@@ -218,7 +218,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         //Check if there is another boat on the place that the boat will be placed
                         if(coordinate[1] <= 5){
                             for(var i = 0 ; i < 4 ; i++){
-                                if(grid[coordinate[0]][coordinate[1]+i] === 2){
+                                if(board[coordinate[0]][coordinate[1]+i] === 2){
                                     boatOverlap  = true;
                                 }
                             }
@@ -227,7 +227,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         if(coordinate[1] <= 5 && !boatOverlap){
                             var counter = 0
                             while( counter < 4 ){
-                                grid[coordinate[0]][coordinate[1]+counter] = 2
+                                board[coordinate[0]][coordinate[1]+counter] = 2
                                 counter+=1
                             }
                             setStore({ fourGridBoat: store.fourGridBoat - 1 })
@@ -242,7 +242,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         //Check if there is another boat on the place that the boat will be placed
                         if(coordinate[0] <= 6){
                             for(var i = 0 ; i < 3 ; i++){
-                                if(grid[coordinate[0]+i][coordinate[1]] === 2){
+                                if(board[coordinate[0]+i][coordinate[1]] === 2){
                                     boatOverlap  = true;
                                 }
                             }
@@ -251,7 +251,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         if(coordinate[0] <= 6 && !boatOverlap){
                             var counter = 0
                             while( counter < 3 ){
-                                grid[coordinate[0]+counter][coordinate[1]] = 2
+                                board[coordinate[0]+counter][coordinate[1]] = 2
                                 counter+=1
                             }
                             setStore({ threeGridBoat: store.threeGridBoat - 1 })
@@ -264,7 +264,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         //Check if there is another boat on the place that the boat will be placed
                         if(coordinate[1] <= 6){
                             for(var i = 0 ; i < 3 ; i++){
-                                if(grid[coordinate[0]][coordinate[1]+i] === 2){
+                                if(board[coordinate[0]][coordinate[1]+i] === 2){
                                     boatOverlap  = true;
                                 }
                             }
@@ -273,7 +273,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         if(coordinate[1] <= 6 && !boatOverlap){
                             var counter = 0
                             while( counter < 3 ){
-                                grid[coordinate[0]][coordinate[1]+counter] = 2
+                                board[coordinate[0]][coordinate[1]+counter] = 2
                                 counter+=1
                             }
                             setStore({ threeGridBoat: store.threeGridBoat - 1 })
@@ -288,7 +288,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         //Check if there is another boat on the place that the boat will be placed
                         if(coordinate[0] <= 7){
                             for(var i = 0 ; i < 2 ; i++){
-                                if(grid[coordinate[0]+i][coordinate[1]] === 2){
+                                if(board[coordinate[0]+i][coordinate[1]] === 2){
                                     boatOverlap  = true;
                                 }
                             }
@@ -297,7 +297,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         if(coordinate[0] <= 7 && !boatOverlap){
                             var counter = 0
                             while( counter < 2 ){
-                                grid[coordinate[0]+counter][coordinate[1]] = 2
+                                board[coordinate[0]+counter][coordinate[1]] = 2
                                 counter+=1
                             }
                             setStore({ twoGridBoat: store.twoGridBoat - 1 })
@@ -310,7 +310,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         //Check if there is another boat on the place that the boat will be placed
                         if(coordinate[1] <= 7){
                             for(var i = 0 ; i < 2 ; i++){
-                                if(grid[coordinate[0]][coordinate[1]+i] === 2){
+                                if(board[coordinate[0]][coordinate[1]+i] === 2){
                                     boatOverlap  = true;
                                 }
                             }
@@ -319,7 +319,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         if(coordinate[1] <= 7 && !boatOverlap){
                             var counter = 0
                             while( counter < 2 ){
-                                grid[coordinate[0]][coordinate[1]+counter] = 2
+                                board[coordinate[0]][coordinate[1]+counter] = 2
                                 counter+=1
                             }
                             setStore({ twoGridBoat: store.twoGridBoat - 1 })

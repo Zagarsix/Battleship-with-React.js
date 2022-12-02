@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from 'react'
 import { Context } from '../store/appContext'
 
-function PreGame() {
+function SetupMenu() {
     const { store,actions } = useContext(Context)
 
-    //This for loop scans the playerGrid and when the boat is placed (when equals 2), it changes its class to square placed
-    for(var row = 0 ; row < store.playerGrid.length ; row++){
+    //Se escanea el tablero del jugador y posiciona las naves//
+    for(var row = 0 ; row < store.gamerBoard.length ; row++){
         for(var column = 0 ; column < 9 ; column++){
-            if(store.playerGrid[row][column] === 2){
+            if(store.gamerBoard[row][column] === 2){
                 document.getElementById("pregame"+String(row)+String(column)).className= 'square placed'
             }
         }
@@ -15,15 +15,15 @@ function PreGame() {
 
     return (
         <>
-            <h1 className='text-center p-3'>Place your boats!</h1>
-            {/* Dinamic Headline when placing boats */}
-            {store.fiveGridBoat === 1 ? <h3 className='text-center p-2'>Put your 5-Grid Carrier! ({store.fiveGridBoat} left.)</h3> : null}
-            {store.fourGridBoat >= 1 && store.fiveGridBoat === 0 ?  <h3 className='text-center p-2'>Put your 4-Grid Battleships! ({store.fourGridBoat} left.)</h3> : null }
-            {store.threeGridBoat >= 1 && store.fiveGridBoat === 0 && store.fourGridBoat === 0 ?  <h3 className='text-center p-2'>Put your 3-Grid Cruiser! ({store.threeGridBoat} left.)</h3> : null }
-            {store.twoGridBoat === 1 && store.fiveGridBoat === 0 && store.fourGridBoat === 0 && store.threeGridBoat === 0 ?  <h3 className='text-center p-2'>Put your 2-Grid Destroyer! ({store.twoGridBoat} left.)</h3> : null }
-            {store.twoGridBoat === 0 && store.fiveGridBoat === 0 && store.fourGridBoat === 0 && store.threeGridBoat === 0 ?  <h3 className='text-center p-2'>Game's Ready! , Prepare!!!</h3> : null }
-            {/* Checks for horizontal or vertical placement */}
-            <div className='d-flex justify-content-center pb-4'>
+            <h1 className='text-center p-3' id="SuperTitle">"Battleship with React.js"</h1>
+            {store.fiveGridBoat === 1 ? <h3 className='text-center p-2'>Posiciona tu portaaviones (5 espacios)! </h3> : null}
+            {store.fourGridBoat >= 1 && store.fiveGridBoat === 0 ?  <h3 className='text-center p-2'>Posiciona tus acorazados (4 espacios)! </h3> : null }
+            {store.threeGridBoat >= 1 && store.fiveGridBoat === 0 && store.fourGridBoat === 0 ?  <h3 className='text-center p-2'>Posiciona tus cruceros (3 espacios)! </h3> : null }
+            {store.twoGridBoat === 1 && store.fiveGridBoat === 0 && store.fourGridBoat === 0 && store.threeGridBoat === 0 ?  <h3 className='text-center p-2'>Posiciona tu buque (2 espacios)!</h3> : null }
+            {store.twoGridBoat === 0 && store.fiveGridBoat === 0 && store.fourGridBoat === 0 && store.threeGridBoat === 0 ?  <h3 className='text-center p-2'>¿Estás preparado? Fuego!</h3> : null }
+            
+            {/* Elige la ubicación de las naves */}
+            <div className='d-flex p-4 mx-4 justify-content-center'>
                 <div className="form-check form-check-inline">
                     <input
                         className="form-check-input"
@@ -53,10 +53,10 @@ function PreGame() {
                 </div>
             </div>
 
-            <div className='d-flex justify-content-center'>
-                <div className='grid'>
-                    {/* Column Coordinates Section */}
-                    <div className='column-coordinates'>
+            <div className='d-flex justify-content-center' id="gamerBoard">
+                <div className='board'>
+                    {/* Sección de columnas */}
+                    <div className='columns'>
                         <div className='column-counter'>
                             <p>1</p>
                         </div>
@@ -86,7 +86,7 @@ function PreGame() {
                         </div>
                     </div>
                     {/* Row 1 [0,X] */}
-                    <div className='grid-row'>
+                    <div className='rows'>
                         <div className='row-counter'><p>1</p></div>
                         <div id='pregame00' className='square' onClick={(e) => actions.handleBoatPlacement([0, 0])}></div>
                         <div id='pregame01' className='square' onClick={(e) => actions.handleBoatPlacement([0, 1])}></div>
@@ -99,7 +99,7 @@ function PreGame() {
                         <div id='pregame08' className='square' onClick={(e) => actions.handleBoatPlacement([0, 8])}></div>
                     </div>
                     {/* Row 2 [1,X] */}
-                    <div className='grid-row'>
+                    <div className='rows'>
                         <div className='row-counter'><p>2</p></div>
                         <div id='pregame10' className='square' onClick={(e) => actions.handleBoatPlacement([1, 0])}></div>
                         <div id='pregame11' className='square' onClick={(e) => actions.handleBoatPlacement([1, 1])}></div>
@@ -112,7 +112,7 @@ function PreGame() {
                         <div id='pregame18' className='square' onClick={(e) => actions.handleBoatPlacement([1, 8])}></div>
                     </div>
                     {/* Row 3 [2,X] */}
-                    <div className='grid-row'>
+                    <div className='rows'>
                         <div className='row-counter'><p>3</p></div>
                         <div id='pregame20' className='square' onClick={(e) => actions.handleBoatPlacement([2, 0])}></div>
                         <div id='pregame21' className='square' onClick={(e) => actions.handleBoatPlacement([2, 1])}></div>
@@ -125,7 +125,7 @@ function PreGame() {
                         <div id='pregame28' className='square' onClick={(e) => actions.handleBoatPlacement([2, 8])}></div>
                     </div>
                     {/* Row 4 [3,X] */}
-                    <div className='grid-row'>
+                    <div className='rows'>
                         <div className='row-counter'><p>4</p></div>
                         <div id='pregame30' className='square' onClick={(e) => actions.handleBoatPlacement([3, 0])}></div>
                         <div id='pregame31' className='square' onClick={(e) => actions.handleBoatPlacement([3, 1])}></div>
@@ -138,7 +138,7 @@ function PreGame() {
                         <div id='pregame38' className='square' onClick={(e) => actions.handleBoatPlacement([3, 8])}></div>
                     </div>
                     {/* Row 5 [4,X] */}
-                    <div className='grid-row'>
+                    <div className='rows'>
                         <div className='row-counter'><p>5</p></div>
                         <div id='pregame40' className='square' onClick={(e) => actions.handleBoatPlacement([4, 0])}></div>
                         <div id='pregame41' className='square' onClick={(e) => actions.handleBoatPlacement([4, 1])}></div>
@@ -151,7 +151,7 @@ function PreGame() {
                         <div id='pregame48' className='square' onClick={(e) => actions.handleBoatPlacement([4, 8])}></div>
                     </div>
                     {/* Row 6 [5,X] */}
-                    <div className='grid-row'>
+                    <div className='rows'>
                         <div className='row-counter'><p>6</p></div>
                         <div id='pregame50' className='square' onClick={(e) => actions.handleBoatPlacement([5, 0])}></div>
                         <div id='pregame51' className='square' onClick={(e) => actions.handleBoatPlacement([5, 1])}></div>
@@ -164,7 +164,7 @@ function PreGame() {
                         <div id='pregame58' className='square' onClick={(e) => actions.handleBoatPlacement([5, 8])}></div>
                     </div>
                     {/* Row 7 [6,X] */}
-                    <div className='grid-row'>
+                    <div className='rows'>
                         <div className='row-counter'><p>7</p></div>
                         <div id='pregame60' className='square' onClick={(e) => actions.handleBoatPlacement([6, 0])}></div>
                         <div id='pregame61' className='square' onClick={(e) => actions.handleBoatPlacement([6, 1])}></div>
@@ -177,7 +177,7 @@ function PreGame() {
                         <div id='pregame68' className='square' onClick={(e) => actions.handleBoatPlacement([6, 8])}></div>
                     </div>
                     {/* Row 8 [7,X] */}
-                    <div className='grid-row'>
+                    <div className='rows'>
                         <div className='row-counter'><p>8</p></div>
                         <div id='pregame70' className='square' onClick={(e) => actions.handleBoatPlacement([7, 0])}></div>
                         <div id='pregame71' className='square' onClick={(e) => actions.handleBoatPlacement([7, 1])}></div>
@@ -190,7 +190,7 @@ function PreGame() {
                         <div id='pregame78' className='square' onClick={(e) => actions.handleBoatPlacement([7, 8])}></div>
                     </div>
                     {/* Row 9 [8,X] */}
-                    <div className='grid-row'>
+                    <div className='rows'>
                         <div className='row-counter'><p>9</p></div>
                         <div id='pregame80' className='square' onClick={(e) => actions.handleBoatPlacement([8, 0])}></div>
                         <div id='pregame81' className='square' onClick={(e) => actions.handleBoatPlacement([8, 1])}></div>
@@ -203,9 +203,13 @@ function PreGame() {
                         <div id='pregame88' className='square' onClick={(e) => actions.handleBoatPlacement([8, 8])}></div>
                     </div>
                 </div>
+                <div class="footer fixed-bottom text-center">
+          Made with ❤️ by
+          <a href="https://github.com/Zagarsix"> Zagarsix</a>
+        </div>
             </div>
         </>
     )
 }
 
-export default PreGame
+export default SetupMenu;

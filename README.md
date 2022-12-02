@@ -1,32 +1,49 @@
-# Battleship by Hayder! 🛥
+# Battleship with React.js!
 
-A game where you try to sink all the boats of the CPU!
+- Esta app fue creada usando las siguientes tecnologías: HTML5, CSS3, Bootstrap, JavaScript y React.
 
-Click any coordinate on your grid and see if you hit a boat or not.
-![image](https://user-images.githubusercontent.com/107075433/194783131-792b631f-8951-430c-9b98-6a8cda12180a.png)
+- El template usado es similar a create-react-app (CRA), pero corresponde al boilerplate de 4Geeks Academy: react-hello.
 
-# How to Play 🕹
 
-First you build your grid placing your boats, horizontally or vertically.
 
-![image](https://user-images.githubusercontent.com/107075433/194783191-ccf500a4-016d-4998-962e-aa025e44efc2.png)
 
-Then the CPU will arrange its boats and the first turn is yours!
+##  Como inicializar la app
 
-You can see where your boats are placed if you press the Show Boats button.
+Clonar el repositorio:
 
-![image](https://user-images.githubusercontent.com/107075433/194783237-393fae3b-2830-4dd0-843c-88f9ce4d523e.png)
+    $ git clone git@github.com:Zagarsix/Battleship-with-React.js.git
 
-The game is over when whoever sink all the boats of its opponent first!.
+Instalar el paquete npm:
 
-#  How to Run Locally🖥
+    $ npm install
 
-Run all of these commands on the main directory.
+Inicializar el servidor local:
 
-`$ npm install`
+    $ npm run start
 
-`$ npm run start`
+La App estará disponible en [localhost](http://localhost:3000/)
 
-# Play it Online! 🌎
 
-https://battleship-react.vercel.app
+
+
+### Instrucciones del juego
+
+- Debes elegir la posición de tus barcos, de forma horizontal o vertical. 
+- El subtítulo indica el barco que debes ubicar y los espacios que ocupa.
+
+![Alt text](src/img/Posici%C3%B3n-de-los-barcos.png)
+
+
+- Una vez que hayas posicionado tus barcos, la CPU distribuye sus barcos automáticamente. 
+- Tú eres el primero en "disparar". Si aciertas, el cuadrado quedará marcado en rojo. De lo contrario, quedará marcado en azul semitransparente, simulando el agua.
+
+
+
+
+- Siempre que lo desees, puedes verificar la posición de tus barcos, presionando el botón "mostrar barcos" que se encuentra en la parte inferior de tu tablero.
+
+
+
+
+
+- Finalmente, quien logre hundir todos los barcos del contrincante, se coronará como ganador de Battleship!!! Suerte!!!
