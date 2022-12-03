@@ -1,11 +1,13 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            // N° of Boats ,  1 - 5-Grid Boat , 3 - 4-Grid Boat , 2 - 3-Grid Boat, 1- 2-Grid Boat
-            // PLAYER GRID
-            // 0 --> default board state
-            // 1 --> missed board
-            // 2 --> boat board
+            // N° de botes ,  1 portaaviones(5 espacios) , 3 acorazados (4 espacios), 
+            // 2 cruceros (3 espacios), 1 buque (2 espacios)
+
+            // --Tablero del jugador--//
+            // 0 --> estado del tablero por defecto
+            // 1 --> disparo fallido
+            // 2 --> disparo acertado
             gamerBoard: [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -17,9 +19,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
             ],
-            //Sum of Boat Squares hit -> used to determine winner. TO WIN SUM MUST BE: 25
+            //Sumatoria de disparos acertados. Para ganar deben sumar 25.//
             playerHitCount: 0,
-            // COMPUTER GRID
+
+            // --Tablero de la CPU--//
             botGrid: [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -31,54 +34,54 @@ const getState = ({ getStore, getActions, setStore }) => {
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
             ],
-            //Sum of Boat Squares hit -> used to determine winner. This one is for the Computer.
+            //Sumatoria de disparos acertados por la CPU.//
             botHitCount: 0,
-            //Integer to count the number of moves that has been done, used for rendering purposes.
+            //Representa el número de movimientos realizados.//
             moveCount: 0,
-            //Boolean to control the turn flow.
+            //Determina  a quien le toca disparar (jugador y CPU).//
             isPlayerTurn: true,
-            //Boolean to control the game flow.
+            //Determina el estado del juego.//
             gameOver : false,
-            //Boolean to show boat position on player board.
+            //Muestra la posición de los barcos en el tablero del jugador.//
             showBoats: false,
 
-            //--------Grid Building Section of Global Variables-----------
-            //Boolean to go to the main game when player board is created.
+            //--------Variables globales de la construcción de los tableros-----------//
+            //Redirige al juego principal, cuando todos los barcos del jugador están posicionados.//
             gridBuilding : true,
-            //Boolean to set the boat placement horizonal or vertical.
+            //Establece la ubicación del barco: horizontal ó vertical.//
             isHorizontal: true,
-            //Number of Boats to be placed <- For Player Grid Construction.
+            //Número de barcos para el tablero del jugador.//
             fiveGridBoat : 1,
             fourGridBoat: 3,
             threeGridBoat: 2,
             twoGridBoat: 1,
-            //Number of Boats to be placed <- For Bot Grid Construction.
+             //Número de barcos para el tablero de la CPU.//
             botFiveGridBoat: 1,
             botFourGridBoat: 3,
             botThreeGridBoat: 2,
             botTwoGridBoat: 1,
-            //Boolean to Start Random Grid Generating for Bot and Main Game Render
+            //Genera un tablero aleatorio para la CPU y renderiza el juego principal.//
             isPlacementDone: false,
-
-        },
-        actions: {
-            //Global HandleClick Function for Player
+            },
+        
+            actions: {
+            //Función Global HandleClick para el jugador.//
             handleClick: (e, coordinate) => {
                 const store = getStore();
                 if(!store.gameOver){
                     if(store.isPlayerTurn){
-                        //Grid to Attack
+                        //Tablero para atacar.//
                         var board = store.botGrid
-                        //Missed Shot
+                        //Disparo fallido.//
                         if (board[coordinate[0]][coordinate[1]] === 0) {
                             board[coordinate[0]][coordinate[1]] = 1
-                            //Saving the updated board on the Store
+                            //Guardando el tablero actualizado en Store.//
                             setStore({ botGrid: board })
                             setStore({ moveCount: store.moveCount + 1})
                             e.target.className = 'square miss';
-                        //Hit
+                        //Disparo//
                         } else if (board[coordinate[0]][coordinate[1]] === 2) {
-                            //Verification if square was already clicked
+                            //Verifica si ya se hizo click en el cuadrado.//
                             if(e.target.className !== 'square hit'){
                                 setStore({ playerHitCount: store.playerHitCount+1})
                                 setStore({ moveCount: store.moveCount + 1})
@@ -86,48 +89,48 @@ const getState = ({ getStore, getActions, setStore }) => {
                                 return null
                             }
                             e.target.className = 'square hit';
-                        //If you click on an already clicked square
+                        //Si se clickea sobre un cuadrado ya seleccionado.//
                         }else if(board[coordinate[0]][coordinate[1]] === 1){
                             return null
                         }
-                        //This one passes the turn to let the Bot Play
+                        //Permite el turno de la CPU.//
                         setStore({ isPlayerTurn : false})
                     }
                 }
             },
-            //Computer Click Function
+            //Función Global HandleClick para la CPU.//
             handleBotClick: (e,coordinate) => {
                 const store = getStore();
                 if(!store.gameOver){
                     if(!store.isPlayerTurn){
-                        //Grid to Attack
+                       //Tablero para atacar.//
                         var board = store.gamerBoard
-                        //Missed Shot
+                        //Disparo perdido.//
                         if (board[coordinate[0]][coordinate[1]] === 0) {
                             board[coordinate[0]][coordinate[1]] = 1
-                            //Saving the updated board on the Store
+                            //Guardando el tablero actualizado en Store.//
                             setStore({ gamerBoard: board })
                             setStore({ moveCount: store.moveCount + 1})
                             e.target.className = 'square miss';
-                        //Hit
+                        //Disparo//
                         } else if (board[coordinate[0]][coordinate[1]] === 2) {
-                            //Verification if square was already clicked
+                            //Verifica si ya se hizo click en el cuadrado.//
                             if(e.target.className !== 'square hit'){
                                 setStore({ botHitCount: store.botHitCount+1})
                                 setStore({ moveCount: store.moveCount + 1})
                             }
                             e.target.className = 'square hit';
-                        //If you click on an already clicked square    
+                        //Si se clickea sobre un cuadrado ya seleccionado.//    
                         }else if(board[coordinate[0]][coordinate[1]] === 1){
                             return null
                         }
-                        //This one passes the turn to the Player
+                        //Permite el turno del jugador.//
                         setStore({ isPlayerTurn : true})
                     }
 
                 }
             },
-            /* Function to end the game loop */
+            /* Finaliza el bucle */
             endGame : () => {
                 setStore({gameOver : true})
             },
@@ -136,7 +139,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 const store = getStore()
                 setStore({ showBoats : !store.showBoats })
                 if(store.showBoats){
-                    //This loop cans the gamerBoard to change its style whenever a 2 is found. (2 is where a boat is placed on the Grid)
+                    //Este bucle permite que el tablero del jugador cambie su estilo//
                     for(var row = 0 ; row < store.gamerBoard.length ; row++){
                         for(var column = 0 ; column < 9 ; column++){
                             if(store.gamerBoard[row][column] === 2){
@@ -145,7 +148,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         }
                     }
                 }else{
-                    //This loop is to revert the changes the above loops made.
+                    //Este bucle revierte los cambios realizados en los bucles anteriores.//
                     for(var row = 0 ; row < store.gamerBoard.length ; row++){
                         for(var column = 0 ; column < 9 ; column++){
                             if(store.gamerBoard[row][column] === 2){
@@ -156,30 +159,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
                 
             },
-            //Function to control the board construction for the player, only admitting valid positions.
+            //Controla la construcción del tablero del jugador (posición válida de cada barco).//
             handleBoatPlacement: (coordinate) => {
                 const store = getStore();
                 var board = store.gamerBoard;
-                //5-GRID BOAT
+                //PORTAAVIONES (5 espacios)//
                 if(store.fiveGridBoat > 0){
-                    //5-Grid Carrier Placement - VERTICAL
                     if(!store.isHorizontal){
-                        //Boat Placement Check , to prevent boat placement outside the board.
+                        //Previene la ubicación del barco fuera del tablero.//
                         if(coordinate[0] <= 4){
                             var counter = 0
-                            //Boat Placement if everything is OK
+                            //La ubicación del barco está ok.//
                             while( counter < 5 ){
                                 board[coordinate[0]+counter][coordinate[1]] = 2
                                 counter+=1
                             }
                             setStore({fiveGridBoat: 0})
-                        }
-                    //5 - Grid Carrier Placement - HORIZONTAL   
-                    }else if(store.isHorizontal){
-                        //Boat Placement Check , to prevent boat placement outside the board.
+                        }}
+                        else if(store.isHorizontal){
+                        //Previene la ubicación del barco fuera del tablero.//
                         if(coordinate[1] <= 4){
                             var counter = 0
-                            //Boat Placement if everything is OK
+                            //La ubicación del barco está ok.//
                             while( counter < 5 ){
                                 board[coordinate[0]][coordinate[1]+counter] = 2
                                 counter+=1
@@ -187,13 +188,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                             setStore({ fiveGridBoat: 0 })
                         }
                     }
-                //4-GRID BOAT
+                //ACORAZADOS (4 espacios)//
                 }else if(store.fourGridBoat > 0){
-                    //4-Grid Boat Check - VERTICAL
+                    //4-Comprueba la posición del barco - VERTICAL
                     if(!store.isHorizontal){
-                        //Boat Placement Checking
+                        //Verificando la ubicación del barco
                         var boatOverlap = false;
-                        //Check if there is another boat on the place that the boat will be placed
+                        ////Comprueba si hay otro barco en el lugar seleccionado//
                         if(coordinate[0] <= 5){
                             for(var i = 0 ; i < 4 ; i++){
                                 if(board[coordinate[0]+i][coordinate[1]] === 2){
@@ -201,7 +202,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                                 }
                             }
                         }
-                        //Boat Placement if everything is OK
+                        //La ubicación del barco está ok.//
                         if(coordinate[0] <= 5 && !boatOverlap){
                             var counter = 0
                             while( counter < 4 ){
@@ -211,11 +212,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                             setStore({ fourGridBoat: store.fourGridBoat - 1 })
                         }
                     
-                    //4-Grid Boat Check - HORIZONTAL   
+                    //4-Comprueba la posición del barco - HORIZONTAL   
                     }else if(store.isHorizontal){
-                        //Boat Placement Checking
+                        //Verifica la ubicación del barco.//
                         var boatOverlap = false;
-                        //Check if there is another boat on the place that the boat will be placed
+                        //Comprueba si hay otro barco en el lugar seleccionado//
                         if(coordinate[1] <= 5){
                             for(var i = 0 ; i < 4 ; i++){
                                 if(board[coordinate[0]][coordinate[1]+i] === 2){
@@ -223,7 +224,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                                 }
                             }
                         }
-                        //Boat Placement if everything is OK
+                        //La ubicación del barco está ok.//
                         if(coordinate[1] <= 5 && !boatOverlap){
                             var counter = 0
                             while( counter < 4 ){
@@ -233,13 +234,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                             setStore({ fourGridBoat: store.fourGridBoat - 1 })
                         }
                     }
-                //3-GRID BOAT    
+                //CRUCEROS (3 ESPACIOS)   
                 }else if(store.threeGridBoat > 0){
-                    //3-Grid Boat Check - VERTICAL
+                    //3 Comprueba la posición del barco - VERTICAL
                     if(!store.isHorizontal){
-                        //Boat Placement Checking
+                        //Verificando la ubicación del barco
                         var boatOverlap = false;
-                        //Check if there is another boat on the place that the boat will be placed
+                        //Comprueba si hay otro barco en el lugar seleccionado//
                         if(coordinate[0] <= 6){
                             for(var i = 0 ; i < 3 ; i++){
                                 if(board[coordinate[0]+i][coordinate[1]] === 2){
@@ -247,7 +248,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                                 }
                             }
                         }
-                        //Boat Placement if everything is OK
+                        //La ubicación del barco está ok.//
                         if(coordinate[0] <= 6 && !boatOverlap){
                             var counter = 0
                             while( counter < 3 ){
@@ -257,11 +258,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                             setStore({ threeGridBoat: store.threeGridBoat - 1 })
                         }
                     
-                    //3-Grid Boat Check - HORIZONTAL   
+                    //3-Comprueba la posición del barco - HORIZONTAL    
                     }else if(store.isHorizontal){
-                        //Boat Placement Checking
+                        //Verificando la ubicación del barco
                         var boatOverlap = false;
-                        //Check if there is another boat on the place that the boat will be placed
+                        //Comprueba si hay otro barco en el lugar seleccionado//
                         if(coordinate[1] <= 6){
                             for(var i = 0 ; i < 3 ; i++){
                                 if(board[coordinate[0]][coordinate[1]+i] === 2){
@@ -269,7 +270,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                                 }
                             }
                         }
-                        //Boat Placement if everything is OK
+                        //La ubicación del barco está ok.//
                         if(coordinate[1] <= 6 && !boatOverlap){
                             var counter = 0
                             while( counter < 3 ){
@@ -279,13 +280,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                             setStore({ threeGridBoat: store.threeGridBoat - 1 })
                         }
                     }
-                //2-GRID BOAT    
+                //BUQUES (2 espacios)    
                 }else if(store.twoGridBoat > 0){
-                    //2-Grid Boat Check - VERTICAL
+                    //2-Comprueba la posición del barco - VERTICAL
                     if(!store.isHorizontal){
-                        //Boat Placement Checking
+                        //Verificando la ubicación del barco
                         var boatOverlap = false;
-                        //Check if there is another boat on the place that the boat will be placed
+                        //Comprueba si hay otro barco en el lugar seleccionado//
                         if(coordinate[0] <= 7){
                             for(var i = 0 ; i < 2 ; i++){
                                 if(board[coordinate[0]+i][coordinate[1]] === 2){
@@ -293,7 +294,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                                 }
                             }
                         }
-                        //Boat Placement if everything is OK
+                        //La ubicación del barco está ok.//
                         if(coordinate[0] <= 7 && !boatOverlap){
                             var counter = 0
                             while( counter < 2 ){
@@ -303,11 +304,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                             setStore({ twoGridBoat: store.twoGridBoat - 1 })
                         }
                     
-                    //2-Grid Boat Check - HORIZONTAL   
+                    //2-Comprueba la posición del barco - HORIZONTAL   
                     }else if(store.isHorizontal){
-                        //Boat Placement Checking
+                        //Verificando la ubicación del barco
                         var boatOverlap = false;
-                        //Check if there is another boat on the place that the boat will be placed
+                        //Comprueba si hay otro barco en el lugar seleccionado//
                         if(coordinate[1] <= 7){
                             for(var i = 0 ; i < 2 ; i++){
                                 if(board[coordinate[0]][coordinate[1]+i] === 2){
@@ -315,7 +316,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                                 }
                             }
                         }
-                        //Boat Placement if everything is OK
+                        //La ubicación del barco está ok.//
                         if(coordinate[1] <= 7 && !boatOverlap){
                             var counter = 0
                             while( counter < 2 ){
@@ -326,16 +327,16 @@ const getState = ({ getStore, getActions, setStore }) => {
                         }
                     }
                     if(store.fiveGridBoat === 0 && store.fourGridBoat === 0 && store.threeGridBoat === 0 && store.twoGridBoat === 0){
-                        //Boolean Change to Proceed with the Bot Generation and render Main Game
-                        setTimeout(() => {setStore({ isPlacementDone: true})},"2000")
+                        //Genera un tablero aleatorio para la CPU y renderiza el juego principal.//
+                        setTimeout(() => {setStore({ isPlacementDone: true})},"1500")
                     }
                 }
             },
-            //To set the placement to Horizontal
+            //Establece la ubicación de forma horizontal//
             handleDirectionHorizontal: () => {
                 setStore({ isHorizontal: true })
             },
-            //To set the placement to Vertical
+            //Establece la ubicación de forma vertical//
             handleDirectionVertical: () => {
                 setStore({ isHorizontal: false })
             }

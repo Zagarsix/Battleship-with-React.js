@@ -43,7 +43,6 @@ function SetupMenu() {
                         className="form-check-input"
                         type="radio"
                         name="inlineRadioOptions"
-                        id="inlineRadio2"
                         defaultValue="option2"
                         onClick={() => {actions.handleDirectionVertical()}}
                     />
